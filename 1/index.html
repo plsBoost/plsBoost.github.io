@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Image Alignment Results</title>
+    <style>
+        body {
+            padding: 20px;
+        }
+        .image-table img {
+            max-width: 100%;
+            height: auto;
+        }
+        .image-table {
+            margin-top: 20px;
+        }
+        h1 {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Image Alignment Results</h1>
+
+        <!-- Table of Original and Aligned Images -->
+        <table class="table table-bordered text-center image-table">
+            <thead>
+                <tr>
+                    <th>Original Image (3 Plates)</th>
+                    <th>Aligned Image (Output)</th>
+                    <th>Displacement (G, R)</th>
+                </tr>
+            </thead>
+            <tbody>
+                <!-- Row 1: Cathedral -->
+                <tr>
+                    <td><img src="input/cathedral.jpg" alt="Original Cathedral"></td>
+                    <td><img src="pictures/cathedral.jpg" alt="Aligned Cathedral"></td>
+                    <td>G: (5, 2), R: (12, 3)</td>
+                </tr>
+                <!-- Row 2: Church -->
+                <tr>
+                    <td><img src="input/church.tif" alt="Original Church"></td>
+                    <td><img src="pictures/church.jpg" alt="Aligned Church"></td>
+                    <td>G: (4, 25), R: (58, -4)</td>
+                </tr>
+                <!-- Row 3: Emir -->
+                <tr>
+                    <td><img src="input/emir.tif" alt="Original Emir"></td>
+                    <td><img src="pictures/emir.jpg" alt="Aligned Emir"></td>
+                    <td>G: (24, 49), R: (56, 104)</td>
+                </tr>
+                <!-- Row 4: Harvesters -->
+                <tr>
+                    <td><img src="input/harvesters.tif" alt="Original Harvesters"></td>
+                    <td><img src="pictures/harvesters.jpg" alt="Aligned Harvesters"></td>
+                    <td>G: (16, 60), R: (13, 124)</td>
+                </tr>
+                <!-- Row 5: Icon -->
+                <tr>
+                    <td><img src="input/icon.tif" alt="Original Icon"></td>
+                    <td><img src="pictures/icon.jpg" alt="Aligned Icon"></td>
+                    <td>G: (17, 41), R: (23, 89)</td>
+                </tr>
+                <!-- Row 6: Lady -->
+                <tr>
+                    <td><img src="input/lady.tif" alt="Original Lady"></td>
+                    <td><img src="pictures/lady.jpg" alt="Aligned Lady"></td>
+                    <td>G: (9, 54), R: (12, 116)</td>
+                </tr>
+                <!-- Row 7: Melons -->
+                <tr>
+                    <td><img src="input/melons.tif" alt="Original Melons"></td>
+                    <td><img src="pictures/melons.jpg" alt="Aligned Melons"></td>
+                    <td>G: (11, 82), R: (13, 178)</td>
+                </tr>
+                <!-- Row 8: Monastery -->
+                <tr>
+                    <td><img src="input/monastery.jpg" alt="Original Monastery"></td>
+                    <td><img src="pictures/monastery.jpg" alt="Aligned Monastery"></td>
+                    <td>G: (2, 3), R: (2, -3)</td>
+                </tr>
+                <!-- Row 9: Onion Church -->
+                <tr>
+                    <td><img src="input/onion_church.tif" alt="Original Onion Church"></td>
+                    <td><img src="pictures/onion_church.jpg" alt="Aligned Onion Church"></td>
+                    <td>G: (26, 51), R: (36, 108)</td>
+                </tr>
+                <!-- Row 10: Sculpture -->
+                <tr>
+                    <td><img src="input/sculpture.tif" alt="Original Sculpture"></td>
+                    <td><img src="pictures/sculpture.jpg" alt="Aligned Sculpture"></td>
+                    <td>G: (-11, 33), R: (-27, 140)</td>
+                </tr>
+                          <!-- Row 11: Self Portrait -->
+                <tr>
+                    <td><img src="input/self_portrait.tif" alt="Original Self Portrait"></td>
+                    <td><img src="pictures/self_portrait.jpg" alt="Aligned Self Portrait"></td>
+                    <td>G: (29, 79), R: (37, 176)</td>
+                </tr>
+                <!-- Row 12: Three Generations -->
+                <tr>
+                    <td><img src="input/three_generations.tif" alt="Original Three Generations"></td>
+                    <td><img src="pictures/three_generations.jpg" alt="Aligned Three Generations"></td>
+                    <td>G: (14, 53), R: (11, 112)</td>
+                </tr>
+                <!-- Row 13: Tobolsk -->
+                <tr>
+                    <td><img src="input/tobolsk.jpg" alt="Original Tobolsk"></td>
+                    <td><img src="pictures/tobolsk.jpg" alt="Aligned Tobolsk"></td>
+                    <td>G: (3, 3), R: (6, 43)</td>
+                </tr>
+                <!-- Row 14: Train -->
+                <tr>
+                    <td><img src="input/train.tif" alt="Original Train"></td>
+                    <td><img src="pictures/train.jpg" alt="Aligned Train"></td>
+                    <td>G: (32, 87), R: (43, 176)</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <!-- Bootstrap JS for any interactive elements (optional) -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
+ 
