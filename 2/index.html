@@ -198,10 +198,17 @@
         <ol>
             <li>We achieved the same results as the two-step process (Gaussian blur followed by gradient computation).
             </li>
-            <li>The edges appear smoother and more continuous compared to the simple gradient method.</li>
-            <li>There is less apparent noise in the final edge detection result.</li>
-            <li>We were able to achieve these results with fewer convolutions, making the process more computationally
-                efficient.</li>
+            <li>Q1.2: The edges appear smoother and more continuous compared to the simple gradient method.</li>
+            <li>Q1.2: The edges are very noisy in the previous finite differency operator without applying the Gaussian
+                filter. It highlights the increase of intensity of pixels along x and y with the partial derivatives.
+            </li>
+            <li>Q1.2: There is less apparent noise in the final edge detection result with the DoG filter.</li>
+            <li>Q1.2: We were able to achieve these results with fewer convolutions, making the process more
+                computationally
+                efficient. For the single convolution, the results are the same as before, except now the edges look a
+                lot smoother than before and
+                noise is a bit less apparent.
+            </li>
         </ol>
 
         <!-- Part 2: Fun with Frequencies -->
