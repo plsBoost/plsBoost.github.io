@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -14,6 +15,7 @@
         }
     </style>
 </head>
+
 <body>
     <div class="container mt-5">
         <header class="text-center mb-5">
@@ -23,7 +25,9 @@
 
         <section class="bg-dark-section">
             <h2>Part 1: Capturing Images</h2>
-            <p>I captured several sets of images for this project. The first set was taken at CalHacks in San Francisco, while the others were shot around Berkeley. I made sure to maintain significant overlap between consecutive images for better registration.</p>
+            <p>I captured several sets of images for this project. The first set was taken at CalHacks in San Francisco,
+                while the others were shot around Berkeley. I made sure to maintain significant overlap between
+                consecutive images for better registration.</p>
             <div class="row justify-content-center text-center">
                 <div class="col-md-6">
                     <figure class="figure">
@@ -42,12 +46,16 @@
 
         <section class="bg-dark-section">
             <h2>Part 2: Computing Homographies</h2>
-            <p>I implemented a custom homography computation without using built-in functions. Using corresponding points between image pairs, I set up a system of linear equations and solved for the homography matrix H using least squares to handle overdetermined systems and reduce the impact of noise.</p>
+            <p>I implemented a custom homography computation without using built-in functions. Using corresponding
+                points between image pairs, I set up a system of linear equations and solved for the homography matrix H
+                using least squares to handle overdetermined systems and reduce the impact of noise.</p>
         </section>
 
         <section class="bg-dark-section">
             <h2>Part 3: Image Rectification</h2>
-            <p>To verify the homography computation and warping implementation, I tested the system on simple rectangular objects. These examples clearly demonstrate successful recovery from perspective distortion:</p>
+            <p>To verify the homography computation and warping implementation, I tested the system on simple
+                rectangular objects. These examples clearly demonstrate successful recovery from perspective distortion:
+            </p>
             <div class="row justify-content-center text-center">
                 <div class="col-md-6">
                     <figure class="figure">
@@ -81,7 +89,9 @@
 
         <section class="bg-dark-section">
             <h2>Part 4: Image Mosaicing</h2>
-            <p>I created panoramic mosaics by carefully mapping corresponding points between images. For blending, I used bwdist with additional smoothing techniques to generate masks with appropriate weights for combining the images. Some challenges I encountered included:</p>
+            <p>I created panoramic mosaics by carefully mapping corresponding points between images. For blending, I
+                used bwdist with additional smoothing techniques to generate masks with appropriate weights for
+                combining the images. Some challenges I encountered included:</p>
             <ul>
                 <li>Fuzzy areas in regions without good correspondences</li>
                 <li>Artifacts from moving objects (e.g., cars) and changing shadows</li>
@@ -96,8 +106,8 @@
                 </div>
                 <div class="col-12 mb-4">
                     <figure class="figure">
-                        <img src="images/mosaic_output.jpg" class="img-fluid" alt="Berkeley Mosaic">
-                        <figcaption class="text-center">Berkeley Campus Mosaic</figcaption>
+                        <img src="images/shot34_mosaic_output.jpg" class="img-fluid" alt="Berkeley Mosaic">
+                        <figcaption class="text-center">Berkeley Mosaic</figcaption>
                     </figure>
                 </div>
                 <div class="col-12">
@@ -112,4 +122,5 @@
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
 </body>
+
 </html>
