@@ -4,233 +4,289 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>CS180 Project 4</title>
+    <title>CS180 Project 4: Image Mosaicing</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
-    <style>
-        .bg-dark-section {
-            background-color: #f8f9fa;
-            padding: 20px;
-            margin-bottom: 20px;
-            border-radius: 5px;
-        }
-    </style>
 </head>
 
 <body>
     <div class="container mt-5">
-        <header class="text-center mb-5">
+        <div class="text-center mb-5">
             <h1>CS180 Project 4A: Image Mosaicing</h1>
             <h2>Adnan Aman</h2>
-        </header>
+        </div>
 
-        <section class="bg-dark-section">
+        <div class="section bg-dark-section">
             <h2>Part 1: Capturing Images</h2>
             <p>I captured several sets of images for this project. The first set was taken at CalHacks in San Francisco,
                 while the others were shot around Berkeley. I made sure to keep some overlap between the images.</p>
+
             <div class="row justify-content-center text-center">
                 <div class="col-md-6">
                     <figure class="figure">
                         <img src="images/sf_1.jpg" class="img-fluid" alt="SF Image 1">
-                        <figcaption class="text-center">San Francisco Scene 1</figcaption>
+                        <figcaption>San Francisco Scene 1</figcaption>
                     </figure>
                 </div>
                 <div class="col-md-6">
                     <figure class="figure">
                         <img src="images/sf_2.jpg" class="img-fluid" alt="SF Image 2">
-                        <figcaption class="text-center">San Francisco Scene 2</figcaption>
+                        <figcaption>San Francisco Scene 2</figcaption>
                     </figure>
                 </div>
             </div>
-        </section>
+        </div>
 
-        <section class="bg-dark-section">
+        <div class="section bg-dark-section">
             <h2>Part 2: Computing Homographies</h2>
-            <p>I implemented a custom homography computation without using built-in functions. Using corresponding
-                points between image pairs, I set up a system of linear equations and solved for the homography matrix H
-                using least squares to handle overdetermined systems and reduce the impact of noise.</p>
-        </section>
+            <p>To compute the homography matrix, I set up linear equations based on my point pairs. Each pair of points
+                gives us two equations. Since H is a 3x3 matrix with the last element set to 1, I needed to solve for 8
+                unknowns. I used least squares to solve this since I picked more than 4 points.</p>
+        </div>
 
-        <section class="bg-dark-section">
+        <div class="section bg-dark-section">
             <h2>Part 3: Image Rectification</h2>
-            <p>To verify the homography computation and warping implementation, I tested the system on simple
-                rectangular objects. These examples clearly demonstrate successful recovery from perspective distortion:
-            </p>
+            <p>To verify my homography computation and warping implementation, I tested the system on simple rectangular
+                objects. These examples show how well the rectification worked to fix perspective distortion:</p>
+
             <div class="row justify-content-center text-center">
                 <div class="col-md-6">
                     <figure class="figure">
                         <img src="images/square.jpg" class="img-fluid" alt="Original Square">
-                        <figcaption class="text-center">Original Image</figcaption>
+                        <figcaption>Original Image</figcaption>
                     </figure>
                 </div>
                 <div class="col-md-6">
                     <figure class="figure">
                         <img src="images/square_ish_rectified_output.jpg" class="img-fluid" alt="Rectified Square">
-                        <figcaption class="text-center">Rectified Image</figcaption>
+                        <figcaption>Rectified Image</figcaption>
                     </figure>
-
                 </div>
             </div>
+
             <div class="row justify-content-center text-center">
                 <div class="col-md-6">
                     <figure class="figure">
                         <img src="images/original_image.jpg" class="img-fluid" alt="Original Image">
-                        <figcaption class="text-center">Original Image</figcaption>
+                        <figcaption>Original Image</figcaption>
                     </figure>
                 </div>
                 <div class="col-md-6">
                     <figure class="figure">
                         <img src="images/rectified_image.jpg" class="img-fluid" alt="Rectified Image">
-                        <figcaption class="text-center">Rectified Image</figcaption>
+                        <figcaption>Rectified Image</figcaption>
                     </figure>
                 </div>
             </div>
-        </section>
+        </div>
 
-        <section class="bg-dark-section">
+        <div class="section bg-dark-section">
             <h2>Part 4: Image Mosaicing</h2>
-            <p>I created panoramic mosaics by carefully mapping corresponding points between images. For blending, I
-                used bwdist with additional smoothing techniques to generate masks with appropriate weights for
-                combining the images. Some challenges I encountered included:</p>
+            <p>For blending the images together, I used distance transform with a convex hull to create weights that
+                fade from the center to the edges. I originally tried just using rectangles for the image bounds but
+                this gave weird edges, so the convex hull worked much better. I added Laplacian blending to handle the
+                seams better.</p>
+
+            <p>Some challenges I encountered:</p>
             <ul>
-                <li>Fuzzy areas in regions without good correspondences</li>
-                <li>Artifacts from moving objects (e.g., cars) and changing shadows</li>
-                <li>The SF photos turned out particularly well due to the static scene</li>
+                <li>Fuzzy areas where I didn't have good correspondences</li>
+                <li>Moving objects and shadows caused some blending issues</li>
+                <li>Static scenes like the SF photos worked best</li>
             </ul>
+
             <div class="row justify-content-center text-center">
                 <div class="col-12 mb-4">
                     <figure class="figure">
                         <img src="images/sf_mosaic_output.jpg" class="img-fluid" alt="SF Mosaic">
-                        <figcaption class="text-center">San Francisco Mosaic Result</figcaption>
+                        <figcaption>San Francisco Mosaic Result</figcaption>
                     </figure>
                 </div>
                 <div class="col-12 mb-4">
                     <figure class="figure">
                         <img src="images/shot34_mosaic_output.jpg" class="img-fluid" alt="Berkeley Mosaic">
-                        <figcaption class="text-center">Berkeley Mosaic</figcaption>
+                        <figcaption>Berkeley Mosaic</figcaption>
                     </figure>
                 </div>
                 <div class="col-12">
                     <figure class="figure">
                         <img src="images/shot_mosaic_output.jpg" class="img-fluid" alt="Additional Mosaic">
-                        <figcaption class="text-center">Additional Berkeley Scene</figcaption>
+                        <figcaption>Additional Berkeley Scene</figcaption>
                     </figure>
                 </div>
             </div>
-        </section>
-    </div>
 
-    <header class="text-center mb-5">
-        <h1>CS180 Project 4B: Feature Matching for Autostitching</h1>
-        <h2>Adnan Aman</h2>
-    </header>
-
-    <section class="bg-dark-section">
-        <h2>Part 5: Automatic Feature Matching and Stitching</h2>
-        <p>For the second part of the project, I implemented automatic image stitching using feature detection and
-            matching. The process involved Harris corner detection, feature descriptor extraction, and RANSAC for robust
-            homography estimation. Below are comparisons between manual correspondences (Part A) and automatic feature
-            matching (Part B).</p>
-
-        <h3 class="mt-4">Example 1: Shot Sequence</h3>
-        <div class="row justify-content-center text-center mb-4">
-            <div class="col-md-6">
-                <figure class="figure">
-                    <img src="images/shot1.jpg" class="img-fluid" alt="Shot 1">
-                    <figcaption>Input Image 1</figcaption>
-                </figure>
-            </div>
-            <div class="col-md-6">
-                <figure class="figure">
-                    <img src="images/shot2.jpg" class="img-fluid" alt="Shot 2">
-                    <figcaption>Input Image 2</figcaption>
-                </figure>
-            </div>
+            <h2>What I Learned</h2>
+            <p>I learned how to warp images using homography matrices and set up linear equations to solve for H. Seeing
+                how rectification fixed perspective warping helped me understand the math better. The distance transform
+                with convex hull really helped get clean edges when blending the images together.</p>
         </div>
-        <div class="row justify-content-center text-center">
-            <div class="col-md-6">
-                <figure class="figure">
-                    <img src="images/shot_mosaic_output.jpg" class="img-fluid" alt="Manual Mosaic">
-                    <figcaption>Manual Correspondence Result (Part A)</figcaption>
-                </figure>
-            </div>
-            <div class="col-md-6">
-                <figure class="figure">
-                    <img src="images/shot12_mosaic_output.jpg" class="img-fluid" alt="Automatic Mosaic">
-                    <figcaption>RANSAC-based Automatic Result (Part B)</figcaption>
-                </figure>
-            </div>
+        <!-- insert spacing -->
+        <br>
+        <div class="text-center mb-5">
+            <h1>CS180 Project 4B: Feature Matching for Autostitching</h1>
         </div>
 
-        <h3 class="mt-4">Example 2: Indoor Scene</h3>
-        <div class="row justify-content-center text-center mb-4">
-            <div class="col-md-6">
-                <figure class="figure">
-                    <img src="images/in1.jpg" class="img-fluid" alt="Indoor Scene 1">
-                    <figcaption>Input Image 1</figcaption>
-                </figure>
+        <div class="section bg-dark-section">
+            <h2>Best Result: Outdoor Scene</h2>
+            <p>This scene shows a big difference between manual and automatic feature detection. My hand-picked
+                points weren't great and caused some alignment issues. The RANSAC algorithm found much better
+                corresponding points automatically, which made the final mosaic line up way better.</p>
+
+            <div class="row justify-content-center text-center mb-4">
+                <div class="col-md-6">
+                    <figure class="figure">
+                        <img src="images/out1.jpg" class="img-fluid" alt="Outdoor Scene 1">
+                        <figcaption>Input Image 1</figcaption>
+                    </figure>
+                </div>
+                <div class="col-md-6">
+                    <figure class="figure">
+                        <img src="images/out2.jpg" class="img-fluid" alt="Outdoor Scene 2">
+                        <figcaption>Input Image 2</figcaption>
+                    </figure>
+                </div>
             </div>
-            <div class="col-md-6">
-                <figure class="figure">
-                    <img src="images/in2.jpg" class="img-fluid" alt="Indoor Scene 2">
-                    <figcaption>Input Image 2</figcaption>
-                </figure>
-            </div>
-        </div>
-        <div class="row justify-content-center text-center">
-            <div class="col-md-6">
-                <figure class="figure">
-                    <img src="images/in_mosaic_output.jpg" class="img-fluid" alt="Manual Indoor Mosaic">
-                    <figcaption>Manual Correspondence Result (Part A)</figcaption>
-                </figure>
-            </div>
-            <div class="col-md-6">
-                <figure class="figure">
-                    <img src="images/in12_mosaic_output.jpg" class="img-fluid" alt="Automatic Indoor Mosaic">
-                    <figcaption>RANSAC-based Automatic Result (Part B)</figcaption>
-                </figure>
+
+            <div class="row justify-content-center text-center">
+                <div class="col-md-6">
+                    <figure class="figure">
+                        <img src="images/out_mosaic_output.png" class="img-fluid" alt="Manual Outdoor Mosaic">
+                        <figcaption>Manual Result - Not Great</figcaption>
+                    </figure>
+                </div>
+                <div class="col-md-6">
+                    <figure class="figure">
+                        <img src="images/out12_mosaic_output.jpg" class="img-fluid" alt="Automatic Outdoor Mosaic">
+                        <figcaption>RANSAC Result - Much Better Alignment</figcaption>
+                    </figure>
+                </div>
             </div>
         </div>
 
-        <h3 class="mt-4">Example 3: Outdoor Scene</h3>
-        <div class="row justify-content-center text-center mb-4">
-            <div class="col-md-6">
-                <figure class="figure">
-                    <img src="images/out1.jpg" class="img-fluid" alt="Outdoor Scene 1">
-                    <figcaption>Input Image 1</figcaption>
-                </figure>
+        <div class="section bg-dark-section">
+            <h2>Feature Detection Process</h2>
+            <p>Following the MOPS paper, here's how I found and matched features:</p>
+
+            <h3>Harris Corner Detection and ANMS</h3>
+            <p>First found corners using Harris detector, then did ANMS by:
+                1. Finding the distance to the nearest stronger corner for each point
+                2. Picking the 500 points with largest distances to spread them out</p>
+
+            <div class="row justify-content-center text-center mb-4">
+                <div class="col-md-6">
+                    <figure class="figure">
+                        <img src="images/without_anms_ex1.png" class="img-fluid" alt="Before ANMS">
+                        <figcaption>Harris Corners Before ANMS</figcaption>
+                    </figure>
+                </div>
+                <div class="col-md-6">
+                    <figure class="figure">
+                        <img src="images/anms_ex1.png" class="img-fluid" alt="After ANMS">
+                        <figcaption>After ANMS - Better Distribution</figcaption>
+                    </figure>
+                </div>
             </div>
-            <div class="col-md-6">
-                <figure class="figure">
-                    <img src="images/out2.jpg" class="img-fluid" alt="Outdoor Scene 2">
-                    <figcaption>Input Image 2</figcaption>
-                </figure>
+
+            <h3>Feature Matching</h3>
+            <p>For each corner:
+                1. Took 40x40 patches and downsampled to 8x8
+                2. Used nearest neighbors to find matches
+                3. Kept matches where the best match was way better than the second best</p>
+
+            <div class="row justify-content-center text-center">
+                <div class="col-12">
+                    <figure class="figure">
+                        <img src="images/feature_matches_ex1.png" class="img-fluid" alt="Feature Matches">
+                        <figcaption>Feature Matches Between Image Pair</figcaption>
+                    </figure>
+                </div>
+            </div>
+
+            <h3>RANSAC Results</h3>
+            <p>Used RANSAC to find the best matching points and compute the homography:</p>
+
+            <div class="row justify-content-center text-center">
+                <div class="col-12">
+                    <figure class="figure">
+                        <img src="images/out1_out2_ransac_points.png" class="img-fluid" alt="RANSAC Points">
+                        <figcaption>RANSAC-Selected Points</figcaption>
+                    </figure>
+                </div>
             </div>
         </div>
-        <div class="row justify-content-center text-center">
-            <div class="col-md-6">
-                <figure class="figure">
-                    <img src="images/out_mosaic_output.png" class="img-fluid" alt="Manual Outdoor Mosaic">
-                    <figcaption>Manual Correspondence Result (Part A)</figcaption>
-                </figure>
+
+        <div class="section bg-dark-section">
+            <h2>Other Auto-Stitching Results</h2>
+
+            <h3>Indoor Scene</h3>
+            <p>The manual and automatic results were pretty similar here:</p>
+
+            <div class="row justify-content-center text-center mb-4">
+                <div class="col-md-6">
+                    <figure class="figure">
+                        <img src="images/in1.jpg" class="img-fluid" alt="Indoor Scene 1">
+                        <figcaption>Input Image 1</figcaption>
+                    </figure>
+                </div>
+                <div class="col-md-6">
+                    <figure class="figure">
+                        <img src="images/in2.jpg" class="img-fluid" alt="Indoor Scene 2">
+                        <figcaption>Input Image 2</figcaption>
+                    </figure>
+                </div>
             </div>
-            <div class="col-md-6">
-                <figure class="figure">
-                    <img src="images/out12_mosaic_output.jpg" class="img-fluid" alt="Automatic Outdoor Mosaic">
-                    <figcaption>RANSAC-based Automatic Result (Part B)</figcaption>
-                </figure>
+
+            <div class="row justify-content-center text-center">
+                <div class="col-md-6">
+                    <figure class="figure">
+                        <img src="images/in_mosaic_output.jpg" class="img-fluid" alt="Manual Indoor Mosaic">
+                        <figcaption>Manual Result</figcaption>
+                    </figure>
+                </div>
+                <div class="col-md-6">
+                    <figure class="figure">
+                        <img src="images/in12_mosaic_output.jpg" class="img-fluid" alt="Automatic Indoor Mosaic">
+                        <figcaption>Automatic Result</figcaption>
+                    </figure>
+                </div>
+            </div>
+
+            <h3>Shot Sequence</h3>
+            <p>Another case where both methods worked well:</p>
+
+            <div class="row justify-content-center text-center mb-4">
+                <div class="col-md-6">
+                    <figure class="figure">
+                        <img src="images/shot1.jpg" class="img-fluid" alt="Shot 1">
+                        <figcaption>Input Image 1</figcaption>
+                    </figure>
+                </div>
+                <div class="col-md-6">
+                    <figure class="figure">
+                        <img src="images/shot2.jpg" class="img-fluid" alt="Shot 2">
+                        <figcaption>Input Image 2</figcaption>
+                    </figure>
+                </div>
+            </div>
+
+            <div class="row justify-content-center text-center">
+                <div class="col-md-6">
+                    <figure class="figure">
+                        <img src="images/shot_mosaic_output.jpg" class="img-fluid" alt="Manual Mosaic">
+                        <figcaption>Manual Result</figcaption>
+                    </figure>
+                </div>
+                <div class="col-md-6">
+                    <figure class="figure">
+                        <img src="images/shot12_mosaic_output.jpg" class="img-fluid" alt="Automatic Mosaic">
+                        <figcaption>Automatic Result</figcaption>
+                    </figure>
+                </div>
             </div>
         </div>
-    </section>
 
-    <section class="bg-dark-section">
-        <h2>What I Learned</h2>
-        <p>The most fascinating aspect of this project was seeing how robust feature matching algorithms can
-            automatically identify corresponding points between images. Understanding how RANSAC can eliminate outliers
-            and produce reliable homographies, even with noisy feature matches, was particularly enlightening. The
-            project helped me appreciate the complexity of panorama stitching software we use everyday.</p>
-    </section>
-
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
-</body>
-
-</html>
+        <div class="section bg-dark-section">
+            <h2>What I Learned</h2>
+            <p>The coolest part was seeing how feature matching could automatically find corresponding points between
+                images. It was pretty amazing that RANSAC could get even better results than manual point selection in
+                some cases. This really showed me how panorama software works under the hood.</p>
+        </div>
