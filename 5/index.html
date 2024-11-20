@@ -1,0 +1,1126 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CS180: Project 5A - Fun with Diffusion Models!</title>
+
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Custom Styles -->
+    <style>
+        body {
+            background-color: #1c1c1c;
+            color: #f7f7f7;
+            padding: 20px;
+        }
+
+        .header {
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            text-align: center;
+            position: relative;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            color: white;
+        }
+
+        .header img {
+            width: 100%;
+            height: 500px;
+            object-fit: cover;
+            opacity: 0.7;
+        }
+
+        .header h1 {
+            font-size: 48px;
+            color: #ffffff;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            z-index: 10;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.7);
+        }
+
+        .header p {
+            font-size: 25px;
+            color: #ffffff;
+            position: absolute;
+            top: 80%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            z-index: 10;
+            text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.7);
+        }
+
+        h2 {
+            text-align: center;
+            color: #ffffff;
+            margin-bottom: 30px;
+        }
+
+        .bg-dark-section {
+            background-color: #222;
+            padding: 30px;
+            border-radius: 8px;
+            margin-bottom: 30px;
+        }
+
+        .figure-caption {
+            color: #d0d0d0;
+        }
+
+        .resized-img {
+            max-height: 300px;
+            width: auto;
+        }
+
+        .container {
+            padding-top: 20px;
+            padding-bottom: 40px;
+        }
+    </style>
+</head>
+
+<body>
+    <!-- Header Section with First Hybrid Image -->
+    <div class="header">
+        <img src="images/1.10_original1.png" alt="Header Image">
+        <h1>CS180: Project 5A - Fun with Diffusion Models!</h1>
+        <p>Adnan Aman</p>
+    </div>
+
+    <div class="container">
+        <!-- Project Overview Section -->
+        <div class="bg-dark-section">
+            <h2>Project Overview</h2>
+            <p>
+                In this project, we explore the capabilities of diffusion models through various implementations
+                including sampling loops,
+                inpainting, visual anagrams, and hybrid image generation. Using the DeepFloyd IF model, we demonstrate
+                advanced image
+                manipulation techniques and creative applications.
+            </p>
+        </div>
+
+        <!-- Part 0: Setup and Initial Generation -->
+        <div class="bg-dark-section">
+            <h2>Part 0: Setup and Initial Generation</h2>
+            <p>Exploring different prompts and inference steps with DeepFloyd IF model.</p>
+            <h3>Deliverables</h3>
+            <ul>
+                <li>Three text prompts with outputs</li>
+                <li>Comparison of inference steps</li>
+                <li>Random seed: 180</li>
+            </ul>
+
+            <div class="row">
+                <div class="col-md-4">
+                    <figure class="figure">
+                        <img src="images/pt0_amanwearingahat_inf20.png" class="figure-img img-fluid rounded">
+                        <figcaption class="figure-caption">Prompt: "a man wearing a hat" (20 inference steps)
+                        </figcaption>
+                    </figure>
+                </div>
+                <div class="col-md-4">
+                    <figure class="figure">
+                        <img src="images/pt0_amanwearingahat_inf30.png" class="figure-img img-fluid rounded">
+                        <figcaption class="figure-caption">Same prompt with 30 inference steps - Note improved details
+                        </figcaption>
+                    </figure>
+                </div>
+                <div class="col-md-4">
+                    <figure class="figure">
+                        <img src="images/pt0_anoilpaintingofasnowymountainvillage.png"
+                            class="figure-img img-fluid rounded">
+                        <figcaption class="figure-caption">Prompt: "an oil painting of a snowy mountain village"
+                        </figcaption>
+                    </figure>
+                </div>
+                <div class="col-md-4">
+                    <figure class="figure">
+                        <img src="images/pt0_arocketship.png" class="figure-img img-fluid rounded">
+                        <figcaption class="figure-caption">Prompt: "a rocket ship"</figcaption>
+                    </figure>
+                </div>
+            </div>
+        </div>
+
+        <!-- Part 1.1: Forward Process -->
+        <div class="bg-dark-section">
+            <h2>Part 1.1: Forward Process</h2>
+            <p>Implementation of the forward process adding noise to images at different timesteps.</p>
+            <div class="row">
+                <div class="col-md-3">
+                    <figure class="figure">
+                        <img src="images/original_campinelle.png" class="figure-img img-fluid rounded">
+                        <figcaption class="figure-caption">Original Campanile</figcaption>
+                    </figure>
+                </div>
+                <div class="col-md-3">
+                    <figure class="figure">
+                        <img src="images/1.1_250noise_campinelle.png" class="figure-img img-fluid rounded">
+                        <figcaption class="figure-caption">Noise Level t=250</figcaption>
+                    </figure>
+                </div>
+                <div class="col-md-3">
+                    <figure class="figure">
+                        <img src="images/1.1_500noise_campinelle.png" class="figure-img img-fluid rounded">
+                        <figcaption class="figure-caption">Noise Level t=500</figcaption>
+                    </figure>
+                </div>
+                <div class="col-md-3">
+                    <figure class="figure">
+                        <img src="images/1.1_750noise_campinelle.png" class="figure-img img-fluid rounded">
+                        <figcaption class="figure-caption">Noise Level t=750</figcaption>
+                    </figure>
+                </div>
+            </div>
+        </div>
+
+        <!-- Part 1.2: Classical Denoising -->
+        <div class="bg-dark-section">
+            <h2>Part 1.2: Classical Denoising</h2>
+            <p>Using Gaussian blur filtering for denoising at different noise levels.</p>
+
+            <div class="row">
+                <div class="col-md-3">
+                    <figure class="figure">
+                        <img src="images/1.1_250noise_campinelle.png" class="figure-img img-fluid rounded">
+                        <figcaption class="figure-caption">Original Noisy (t=250)</figcaption>
+                    </figure>
+                </div>
+                <div class="col-md-3">
+                    <figure class="figure">
+                        <img src="images/1.2_250denoised_campinelle.png" class="figure-img img-fluid rounded">
+                        <figcaption class="figure-caption">Gaussian Denoised (t=250)</figcaption>
+                    </figure>
+                </div>
+            </div>
+
+            <div class="row mt-3">
+                <div class="col-md-3">
+                    <figure class="figure">
+                        <img src="images/1.1_500noise_campinelle.png" class="figure-img img-fluid rounded">
+                        <figcaption class="figure-caption">Original Noisy (t=500)</figcaption>
+                    </figure>
+                </div>
+                <div class="col-md-3">
+                    <figure class="figure">
+                        <img src="images/1.2_500denoised_campinelle.png" class="figure-img img-fluid rounded">
+                        <figcaption class="figure-caption">Gaussian Denoised (t=500)</figcaption>
+                    </figure>
+                </div>
+            </div>
+
+            <div class="row mt-3">
+                <div class="col-md-3">
+                    <figure class="figure">
+                        <img src="images/1.1_750noise_campinelle.png" class="figure-img img-fluid rounded">
+                        <figcaption class="figure-caption">Original Noisy (t=750)</figcaption>
+                    </figure>
+                </div>
+                <div class="col-md-3">
+                    <figure class="figure">
+                        <img src="images/1.2_750denoised_campinelle.png" class="figure-img img-fluid rounded">
+                        <figcaption class="figure-caption">Gaussian Denoised (t=750)</figcaption>
+                    </figure>
+                </div>
+            </div>
+        </div>
+
+        <!-- Part 1.3: One-Step Denoising -->
+        <div class="bg-dark-section">
+            <h2>Part 1.3: One-Step Denoising</h2>
+            <p>Single-step denoising using UNet predictions at different noise levels.</p>
+
+            <div class="row">
+                <div class="col-md-3">
+                    <figure class="figure">
+                        <img src="images/original_campinelle.png" class="figure-img img-fluid rounded">
+                        <figcaption class="figure-caption">Original Image</figcaption>
+                    </figure>
+                </div>
+                <div class="col-md-3">
+                    <figure class="figure">
+                        <img src="images/1.1_250noise_campinelle.png" class="figure-img img-fluid rounded">
+                        <figcaption class="figure-caption">Noisy Image (t=250)</figcaption>
+                    </figure>
+                </div>
+                <div class="col-md-3">
+                    <figure class="figure">
+                        <img src="images/1.3_250denoised_campinelle.png" class="figure-img img-fluid rounded">
+                        <figcaption class="figure-caption">One-Step Denoised (t=250)</figcaption>
+                    </figure>
+                </div>
+            </div>
+
+            <div class="row mt-3">
+                <div class="col-md-3">
+                    <figure class="figure">
+                        <img src="images/original_campinelle.png" class="figure-img img-fluid rounded">
+                        <figcaption class="figure-caption">Original Image</figcaption>
+                    </figure>
+                </div>
+                <div class="col-md-3">
+                    <figure class="figure">
+                        <img src="images/1.1_500noise_campinelle.png" class="figure-img img-fluid rounded">
+                        <figcaption class="figure-caption">Noisy Image (t=500)</figcaption>
+                    </figure>
+                </div>
+                <div class="col-md-3">
+                    <figure class="figure">
+                        <img src="images/1.3_500denoised_campinelle.png" class="figure-img img-fluid rounded">
+                        <figcaption class="figure-caption">One-Step Denoised (t=500)</figcaption>
+                    </figure>
+                </div>
+            </div>
+
+            <div class="row mt-3">
+                <div class="col-md-3">
+                    <figure class="figure">
+                        <img src="images/original_campinelle.png" class="figure-img img-fluid rounded">
+                        <figcaption class="figure-caption">Original Image</figcaption>
+                    </figure>
+                </div>
+                <div class="col-md-3">
+                    <figure class="figure">
+                        <img src="images/1.1_750noise_campinelle.png" class="figure-img img-fluid rounded">
+                        <figcaption class="figure-caption">Noisy Image (t=750)</figcaption>
+                    </figure>
+                </div>
+                <div class="col-md-3">
+                    <figure class="figure">
+                        <img src="images/1.3_750denoised_campinelle.png" class="figure-img img-fluid rounded">
+                        <figcaption class="figure-caption">One-Step Denoised (t=750)</figcaption>
+                    </figure>
+                </div>
+            </div>
+        </div>
+
+        <!-- Part 1.4: Iterative Denoising -->
+        <div class="bg-dark-section">
+            <h2>Part 1.4: Iterative Denoising</h2>
+            <p>Progressive denoising showing all steps and comparison with other methods.</p>
+
+            <h3>Denoising Steps</h3>
+            <div class="row">
+                <div class="col-md-2">
+                    <figure class="figure">
+                        <img src="images/1.4_step10_denoised_campinelle.png" class="figure-img img-fluid rounded">
+                        <figcaption class="figure-caption">Step 10</figcaption>
+                    </figure>
+                </div>
+                <div class="col-md-2">
+                    <figure class="figure">
+                        <img src="images/1.4_step15_denoised_campinelle.png" class="figure-img img-fluid rounded">
+                        <figcaption class="figure-caption">Step 15</figcaption>
+                    </figure>
+                </div>
+                <div class="col-md-2">
+                    <figure class="figure">
+                        <img src="images/1.4_step20_denoised_campinelle.png" class="figure-img img-fluid rounded">
+                        <figcaption class="figure-caption">Step 20</figcaption>
+                    </figure>
+                </div>
+                <div class="col-md-2">
+                    <figure class="figure">
+                        <img src="images/1.4_step25_denoised_campinelle.png" class="figure-img img-fluid rounded">
+                        <figcaption class="figure-caption">Step 25</figcaption>
+                    </figure>
+                </div>
+                <div class="col-md-2">
+                    <figure class="figure">
+                        <img src="images/1.4_step30_denoised_campinelle.png" class="figure-img img-fluid rounded">
+                        <figcaption class="figure-caption">Step 30</figcaption>
+                    </figure>
+                </div>
+            </div>
+
+            <h3>256x256 Resolution Comparison</h3>
+            <div class="row mt-4">
+                <div class="col-md-4">
+                    <figure class="figure">
+                        <img src="images/1.4_original_256.png" class="figure-img img-fluid rounded">
+                        <figcaption class="figure-caption">Original (256x256)</figcaption>
+                    </figure>
+                </div>
+                <div class="col-md-4">
+                    <figure class="figure">
+                        <img src="images/1.4_noisy_256.png" class="figure-img img-fluid rounded">
+                        <figcaption class="figure-caption">Noisy (256x256)</figcaption>
+                    </figure>
+                </div>
+                <div class="col-md-4">
+                    <figure class="figure">
+                        <img src="images/1.4_iterative_final_256.png" class="figure-img img-fluid rounded">
+                        <figcaption class="figure-caption">Iterative Denoised (256x256)</figcaption>
+                    </figure>
+                </div>
+            </div>
+            <div class="row mt-3">
+                <div class="col-md-4">
+                    <figure class="figure">
+                        <img src="images/1.4_onestep_256.png" class="figure-img img-fluid rounded">
+                        <figcaption class="figure-caption">One-Step Denoised (256x256)</figcaption>
+                    </figure>
+                </div>
+                <div class="col-md-4">
+                    <figure class="figure">
+                        <img src="images/1.4_gaussian_256.png" class="figure-img img-fluid rounded">
+                        <figcaption class="figure-caption">Gaussian Denoised (256x256)</figcaption>
+                    </figure>
+                </div>
+            </div>
+        </div>
+
+        <!-- Part 1.5: Diffusion Model Sampling -->
+        <div class="bg-dark-section">
+            <h2>Part 1.5: Diffusion Model Sampling</h2>
+            <p>Generating images from scratch using DeepFloyd model.</p>
+            <div class="row">
+                <div class="col-md-4">
+                    <figure class="figure">
+                        <img src="images/1.5_sample1.png" class="figure-img img-fluid rounded">
+                        <figcaption class="figure-caption">Generated Sample 1</figcaption>
+                    </figure>
+                </div>
+                <div class="col-md-4">
+                    <figure class="figure">
+                        <img src="images/1.5_sample2.png" class="figure-img img-fluid rounded">
+                        <figcaption class="figure-caption">Generated Sample 2</figcaption>
+                    </figure>
+                </div>
+                <div class="col-md-4">
+                    <figure class="figure">
+                        <img src="images/1.5_sample3.png" class="figure-img img-fluid rounded">
+                        <figcaption class="figure-caption">Generated Sample 3</figcaption>
+                    </figure>
+                </div>
+            </div>
+            <div class="row mt-3">
+                <div class="col-md-4">
+                    <figure class="figure">
+                        <img src="images/1.5_sample4.png" class="figure-img img-fluid rounded">
+                        <figcaption class="figure-caption">Generated Sample 4</figcaption>
+                    </figure>
+                </div>
+                <div class="col-md-4">
+                    <figure class="figure">
+                        <img src="images/1.5_sample5.png" class="figure-img img-fluid rounded">
+                        <figcaption class="figure-caption">Generated Sample 5</figcaption>
+                    </figure>
+                </div>
+            </div>
+        </div>
+
+        <!-- Part 1.6: Classifier Free Guidance -->
+        <div class="bg-dark-section">
+            <h2>Part 1.6: Classifier Free Guidance</h2>
+            <p>Image generation with CFG scale γ=7</p>
+            <div class="row">
+                <div class="col-md-4">
+                    <figure class="figure">
+                        <img src="images/1.6_photo1_256.png" class="figure-img img-fluid rounded">
+                        <figcaption class="figure-caption">CFG Generated Image 1</figcaption>
+                    </figure>
+                </div>
+                <div class="col-md-4">
+                    <figure class="figure">
+                        <img src="images/1.6_photo2_256.png" class="figure-img img-fluid rounded">
+                        <figcaption class="figure-caption">CFG Generated Image 2</figcaption>
+                    </figure>
+                </div>
+                <div class="col-md-4">
+                    <figure class="figure">
+                        <img src="images/1.6_photo3_256.png" class="figure-img img-fluid rounded">
+                        <figcaption class="figure-caption">CFG Generated Image 3</figcaption>
+                    </figure>
+                </div>
+            </div>
+            <div class="row mt-3">
+                <div class="col-md-4">
+                    <figure class="figure">
+                        <img src="images/1.6_photo4_256.png" class="figure-img img-fluid rounded">
+                        <figcaption class="figure-caption">CFG Generated Image 4</figcaption>
+                    </figure>
+                </div>
+                <div class="col-md-4">
+                    <figure class="figure">
+                        <img src="images/1.6_photo5_256.png" class="figure-img img-fluid rounded">
+                        <figcaption class="figure-caption">CFG Generated Image 5</figcaption>
+                    </figure>
+                </div>
+            </div>
+        </div>
+
+        <!-- Part 1.7: Image-to-image Translation -->
+        <div class="bg-dark-section">
+            <h2>Part 1.7: Image-to-image Translation</h2>
+            <p>
+                Using the SDEdit algorithm to project images back onto the natural image manifold with different noise
+                levels.
+                Using prompt "a high quality photo" for base projections.
+            </p>
+
+            <h3>Test Image (Campanile)</h3>
+            <div class="row">
+                <div class="col-md-2">
+                    <figure class="figure">
+                        <img src="images/1.7_original1.png" class="figure-img img-fluid rounded">
+                        <figcaption class="figure-caption">Original Campanile</figcaption>
+                    </figure>
+                </div>
+                <div class="col-md-2">
+                    <figure class="figure">
+                        <img src="images/1.7_original1_noiselevel1.png" class="figure-img img-fluid rounded">
+                        <figcaption class="figure-caption">Noise Level 1</figcaption>
+                    </figure>
+                </div>
+                <div class="col-md-2">
+                    <figure class="figure">
+                        <img src="images/1.7_original1_noiselevel3.png" class="figure-img img-fluid rounded">
+                        <figcaption class="figure-caption">Noise Level 3</figcaption>
+                    </figure>
+                </div>
+                <div class="col-md-2">
+                    <figure class="figure">
+                        <img src="images/1.7_original1_noiselevel5.png" class="figure-img img-fluid rounded">
+                        <figcaption class="figure-caption">Noise Level 5</figcaption>
+                    </figure>
+                </div>
+                <div class="col-md-2">
+                    <figure class="figure">
+                        <img src="images/1.7_original1_noiselevel7.png" class="figure-img img-fluid rounded">
+                        <figcaption class="figure-caption">Noise Level 7</figcaption>
+                    </figure>
+                </div>
+            </div>
+            <div class="row mt-3">
+                <div class="col-md-2">
+                    <figure class="figure">
+                        <img src="images/1.7_original1_noiselevel10.png" class="figure-img img-fluid rounded">
+                        <figcaption class="figure-caption">Noise Level 10</figcaption>
+                    </figure>
+                </div>
+                <div class="col-md-2">
+                    <figure class="figure">
+                        <img src="images/1.7_original1_noiselevel20.png" class="figure-img img-fluid rounded">
+                        <figcaption class="figure-caption">Noise Level 20</figcaption>
+                    </figure>
+                </div>
+            </div>
+
+            <h3>Web Image (Dog)</h3>
+            <div class="row mt-4">
+                <div class="col-md-2">
+                    <figure class="figure">
+                        <img src="images/1.7_original2.png" class="figure-img img-fluid rounded">
+                        <figcaption class="figure-caption">Original Image (Web - Dog)</figcaption>
+                    </figure>
+                </div>
+                <div class="col-md-2">
+                    <figure class="figure">
+                        <img src="images/1.7_original2_noiselevel1.png" class="figure-img img-fluid rounded">
+                        <figcaption class="figure-caption">Noise Level 1</figcaption>
+                    </figure>
+                </div>
+                <div class="col-md-2">
+                    <figure class="figure">
+                        <img src="images/1.7_original2_noiselevel3.png" class="figure-img img-fluid rounded">
+                        <figcaption class="figure-caption">Noise Level 3</figcaption>
+                    </figure>
+                </div>
+                <div class="col-md-2">
+                    <figure class="figure">
+                        <img src="images/1.7_original2_noiselevel5.png" class="figure-img img-fluid rounded">
+                        <figcaption class="figure-caption">Noise Level 5</figcaption>
+                    </figure>
+                </div>
+                <div class="col-md-2">
+                    <figure class="figure">
+                        <img src="images/1.7_original2_noiselevel7.png" class="figure-img img-fluid rounded">
+                        <figcaption class="figure-caption">Noise Level 7</figcaption>
+                    </figure>
+                </div>
+            </div>
+            <div class="row mt-3">
+                <div class="col-md-2">
+                    <figure class="figure">
+                        <img src="images/1.7_original2_noiselevel10.png" class="figure-img img-fluid rounded">
+                        <figcaption class="figure-caption">Noise Level 10</figcaption>
+                    </figure>
+                </div>
+                <div class="col-md-2">
+                    <figure class="figure">
+                        <img src="images/1.7_original2_noiselevel20.png" class="figure-img img-fluid rounded">
+                        <figcaption class="figure-caption">Noise Level 20</figcaption>
+                    </figure>
+                </div>
+            </div>
+
+            <h3>Web Image (Man)</h3>
+            <div class="row mt-4">
+                <div class="col-md-2">
+                    <figure class="figure">
+                        <img src="images/1.7_original3.png" class="figure-img img-fluid rounded">
+                        <figcaption class="figure-caption">Original Image (Web - Man)</figcaption>
+                    </figure>
+                </div>
+                <div class="col-md-2">
+                    <figure class="figure">
+                        <img src="images/1.7_original3_noiselevel1.png" class="figure-img img-fluid rounded">
+                        <figcaption class="figure-caption">Noise Level 1</figcaption>
+                    </figure>
+                </div>
+                <div class="col-md-2">
+                    <figure class="figure">
+                        <img src="images/1.7_original3_noiselevel3.png" class="figure-img img-fluid rounded">
+                        <figcaption class="figure-caption">Noise Level 3</figcaption>
+                    </figure>
+                </div>
+                <div class="col-md-2">
+                    <figure class="figure">
+                        <img src="images/1.7_original3_noiselevel5.png" class="figure-img img-fluid rounded">
+                        <figcaption class="figure-caption">Noise Level 5</figcaption>
+                    </figure>
+                </div>
+                <div class="col-md-2">
+                    <figure class="figure">
+                        <img src="images/1.7_original3_noiselevel7.png" class="figure-img img-fluid rounded">
+                        <figcaption class="figure-caption">Noise Level 7</figcaption>
+                    </figure>
+                </div>
+            </div>
+            <div class="row mt-3">
+                <div class="col-md-2">
+                    <figure class="figure">
+                        <img src="images/1.7_original3_noiselevel10.png" class="figure-img img-fluid rounded">
+                        <figcaption class="figure-caption">Noise Level 10</figcaption>
+                    </figure>
+                </div>
+                <div class="col-md-2">
+                    <figure class="figure">
+                        <img src="images/1.7_original3_noiselevel20.png" class="figure-img img-fluid rounded">
+                        <figcaption class="figure-caption">Noise Level 20</figcaption>
+                    </figure>
+                </div>
+            </div>
+        </div>
+
+        <!-- Part 1.7.1: Hand-Drawn and Web Images -->
+        <div class="bg-dark-section">
+            <h2>Part 1.7.1: Editing Hand-Drawn and Web Images</h2>
+            <p>Projecting non-realistic images onto the natural image manifold using different noise levels.</p>
+
+            <h3>Web Image (Optimus Prime)</h3>
+            <div class="row">
+                <div class="col-md-2">
+                    <figure class="figure">
+                        <img src="images/1.7.1_original1.png" class="figure-img img-fluid rounded">
+                        <figcaption class="figure-caption">Original Web Image (Optimus Prime)</figcaption>
+                    </figure>
+                </div>
+                <div class="col-md-2">
+                    <figure class="figure">
+                        <img src="images/1.7.1_original1_noiselevel1.png" class="figure-img img-fluid rounded">
+                        <figcaption class="figure-caption">Noise Level 1</figcaption>
+                    </figure>
+                </div>
+                <div class="col-md-2">
+                    <figure class="figure">
+                        <img src="images/1.7.1_original1_noiselevel3.png" class="figure-img img-fluid rounded">
+                        <figcaption class="figure-caption">Noise Level 3</figcaption>
+                    </figure>
+                </div>
+                <div class="col-md-2">
+                    <figure class="figure">
+                        <img src="images/1.7.1_original1_noiselevel5.png" class="figure-img img-fluid rounded">
+                        <figcaption class="figure-caption">Noise Level 5</figcaption>
+                    </figure>
+                </div>
+                <div class="col-md-2">
+                    <figure class="figure">
+                        <img src="images/1.7.1_original1_noiselevel7.png" class="figure-img img-fluid rounded">
+                        <figcaption class="figure-caption">Noise Level 7</figcaption>
+                    </figure>
+                </div>
+            </div>
+            <div class="row mt-3">
+                <div class="col-md-2">
+                    <figure class="figure">
+                        <img src="images/1.7.1_original1_noiselevel10.png" class="figure-img img-fluid rounded">
+                        <figcaption class="figure-caption">Noise Level 10</figcaption>
+                    </figure>
+                </div>
+                <div class="col-md-2">
+                    <figure class="figure">
+                        <img src="images/1.7.1_original1_noiselevel20.png" class="figure-img img-fluid rounded">
+                        <figcaption class="figure-caption">Noise Level 20</figcaption>
+                    </figure>
+                </div>
+            </div>
+
+            <h3>Hand-Drawn Image 1 (Smiley Face)</h3>
+            <div class="row mt-4">
+                <div class="col-md-2">
+                    <figure class="figure">
+                        <img src="images/1.7.1_original2_handdrawn.png" class="figure-img img-fluid rounded">
+                        <figcaption class="figure-caption">Original Hand Drawing (Smiley)</figcaption>
+                    </figure>
+                </div>
+                <div class="col-md-2">
+                    <figure class="figure">
+                        <img src="images/1.7.1_original2_handdrawn_noiselevel1.png"
+                            class="figure-img img-fluid rounded">
+                        <figcaption class="figure-caption">Noise Level 1</figcaption>
+                    </figure>
+                </div>
+                <div class="col-md-2">
+                    <figure class="figure">
+                        <img src="images/1.7.1_original2_handdrawn_noiselevel3.png"
+                            class="figure-img img-fluid rounded">
+                        <figcaption class="figure-caption">Noise Level 3</figcaption>
+                    </figure>
+                </div>
+                <div class="col-md-2">
+                    <figure class="figure">
+                        <img src="images/1.7.1_original2_handdrawn_noiselevel5.png"
+                            class="figure-img img-fluid rounded">
+                        <figcaption class="figure-caption">Noise Level 5</figcaption>
+                    </figure>
+                </div>
+                <div class="col-md-2">
+                    <figure class="figure">
+                        <img src="images/1.7.1_original2_handdrawn_noiselevel7.png"
+                            class="figure-img img-fluid rounded">
+                        <figcaption class="figure-caption">Noise Level 7</figcaption>
+                    </figure>
+                </div>
+            </div>
+            <div class="row mt-3">
+                <div class="col-md-2">
+                    <figure class="figure">
+                        <img src="images/1.7.1_original2_handdrawn_noiselevel10.png"
+                            class="figure-img img-fluid rounded">
+                        <figcaption class="figure-caption">Noise Level 10</figcaption>
+                    </figure>
+                </div>
+                <div class="col-md-2">
+                    <figure class="figure">
+                        <img src="images/1.7.1_original2_handdrawn_noiselevel20.png"
+                            class="figure-img img-fluid rounded">
+                        <figcaption class="figure-caption">Noise Level 20</figcaption>
+                    </figure>
+                </div>
+            </div>
+
+            <h3>Hand-Drawn Image 2 (Optimus Prime)</h3>
+            <div class="row mt-4">
+                <div class="col-md-2">
+                    <figure class="figure">
+                        <img src="images/1.7.1_original3_handdrawn.png" class="figure-img img-fluid rounded">
+                        <figcaption class="figure-caption">Original Hand Drawing (Optimus)</figcaption>
+                    </figure>
+                </div>
+                <div class="col-md-2">
+                    <figure class="figure">
+                        <img src="images/1.7.1_original3_handdrawn_noiselevel1.png"
+                            class="figure-img img-fluid rounded">
+                        <figcaption class="figure-caption">Noise Level 1</figcaption>
+                    </figure>
+                </div>
+                <div class="col-md-2">
+                    <figure class="figure">
+                        <img src="images/1.7.1_original3_handdrawn_noiselevel3.png"
+                            class="figure-img img-fluid rounded">
+                        <figcaption class="figure-caption">Noise Level 3</figcaption>
+                    </figure>
+                </div>
+                <div class="col-md-2">
+                    <figure class="figure">
+                        <img src="images/1.7.1_original3_handdrawn_noiselevel5.png"
+                            class="figure-img img-fluid rounded">
+                        <figcaption class="figure-caption">Noise Level 5</figcaption>
+                    </figure>
+                </div>
+                <div class="col-md-2">
+                    <figure class="figure">
+                        <img src="images/1.7.1_original3_handdrawn_noiselevel7.png"
+                            class="figure-img img-fluid rounded">
+                        <figcaption class="figure-caption">Noise Level 7</figcaption>
+                    </figure>
+                </div>
+            </div>
+            <div class="row mt-3">
+                <div class="col-md-2">
+                    <figure class="figure">
+                        <img src="images/1.7.1_original3_handdrawn_noiselevel10.png"
+                            class="figure-img img-fluid rounded">
+                        <figcaption class="figure-caption">Noise Level 10</figcaption>
+                    </figure>
+                </div>
+                <div class="col-md-2">
+                    <figure class="figure">
+                        <img src="images/1.7.1_original3_handdrawn_noiselevel20.png"
+                            class="figure-img img-fluid rounded">
+                        <figcaption class="figure-caption">Noise Level 20</figcaption>
+                    </figure>
+                </div>
+            </div>
+        </div>
+
+        <!-- Part 1.7.2: Inpainting -->
+        <div class="bg-dark-section">
+            <h2>Part 1.7.2: Inpainting</h2>
+            <p>Using RePaint algorithm to fill in masked regions of images while preserving surrounding context.</p>
+
+            <h3>Test Image Inpainting (Campanile)</h3>
+            <div class="row">
+                <div class="col-md-3">
+                    <figure class="figure">
+                        <img src="images/1.7.2_original1.png" class="figure-img img-fluid rounded">
+                        <figcaption class="figure-caption">Original Campanile</figcaption>
+                    </figure>
+                </div>
+                <div class="col-md-3">
+                    <figure class="figure">
+                        <img src="images/1.7.2_original1_mask.png" class="figure-img img-fluid rounded">
+                        <figcaption class="figure-caption">Inpainting Mask</figcaption>
+                    </figure>
+                </div>
+                <div class="col-md-3">
+                    <figure class="figure">
+                        <img src="images/1.7.2_original1_inpainted.png" class="figure-img img-fluid rounded">
+                        <figcaption class="figure-caption">Inpainted Result</figcaption>
+                    </figure>
+                </div>
+            </div>
+
+            <h3>Golden Gate Bridge Inpainting</h3>
+            <div class="row mt-4">
+                <div class="col-md-3">
+                    <figure class="figure">
+                        <img src="images/1.7.2_original2.png" class="figure-img img-fluid rounded">
+                        <figcaption class="figure-caption">Original Golden Gate Bridge</figcaption>
+                    </figure>
+                </div>
+                <div class="col-md-3">
+                    <figure class="figure">
+                        <img src="images/1.7.2_original2_mask.png" class="figure-img img-fluid rounded">
+                        <figcaption class="figure-caption">Inpainting Mask</figcaption>
+                    </figure>
+                </div>
+                <div class="col-md-3">
+                    <figure class="figure">
+                        <img src="images/1.7.2_original2_inpainted.png" class="figure-img img-fluid rounded">
+                        <figcaption class="figure-caption">Inpainted Result</figcaption>
+                    </figure>
+                </div>
+            </div>
+
+            <h3>Cow Inpainting</h3>
+            <div class="row mt-4">
+                <div class="col-md-3">
+                    <figure class="figure">
+                        <img src="images/1.7.2_original3.png" class="figure-img img-fluid rounded">
+                        <figcaption class="figure-caption">Original Cow Image</figcaption>
+                    </figure>
+                </div>
+                <div class="col-md-3">
+                    <figure class="figure">
+                        <img src="images/1.7.2_original3_mask.png" class="figure-img img-fluid rounded">
+                        <figcaption class="figure-caption">Inpainting Mask</figcaption>
+                    </figure>
+                </div>
+                <div class="col-md-3">
+                    <figure class="figure">
+                        <img src="images/1.7.2_original3_inpainted.png" class="figure-img img-fluid rounded">
+                        <figcaption class="figure-caption">Inpainted Result</figcaption>
+                    </figure>
+                </div>
+            </div>
+        </div>
+
+        <!-- Part 1.7.3: Text-Conditional Translation -->
+        <div class="bg-dark-section">
+            <h2>Part 1.7.3: Text-Conditional Image-to-image Translation</h2>
+            <p>Using text prompts to guide the image projection process.</p>
+
+            <h3>Campanile to Rocket Ship</h3>
+            <p>Prompt: "a rocket ship"</p>
+            <div class="row">
+                <div class="col-md-2">
+                    <figure class="figure">
+                        <img src="images/1.7.3_original1.png" class="figure-img img-fluid rounded">
+                        <figcaption class="figure-caption">Original Campanile</figcaption>
+                    </figure>
+                </div>
+                <div class="col-md-2">
+                    <figure class="figure">
+                        <img src="images/1.7.3_original1_noiselevel1.png" class="figure-img img-fluid rounded">
+                        <figcaption class="figure-caption">Noise Level 1</figcaption>
+                    </figure>
+                </div>
+                <div class="col-md-2">
+                    <figure class="figure">
+                        <img src="images/1.7.3_original1_noiselevel3.png" class="figure-img img-fluid rounded">
+                        <figcaption class="figure-caption">Noise Level 3</figcaption>
+                    </figure>
+                </div>
+                <div class="col-md-2">
+                    <figure class="figure">
+                        <img src="images/1.7.3_original1_noiselevel5.png" class="figure-img img-fluid rounded">
+                        <figcaption class="figure-caption">Noise Level 5</figcaption>
+                    </figure>
+                </div>
+                <div class="col-md-2">
+                    <figure class="figure">
+                        <img src="images/1.7.3_original1_noiselevel7.png" class="figure-img img-fluid rounded">
+                        <figcaption class="figure-caption">Noise Level 7</figcaption>
+                    </figure>
+                </div>
+            </div>
+            <div class="row mt-3">
+                <div class="col-md-2">
+                    <figure class="figure">
+                        <img src="images/1.7.3_original1_noiselevel10.png" class="figure-img img-fluid rounded">
+                        <figcaption class="figure-caption">Noise Level 10</figcaption>
+                    </figure>
+                </div>
+                <div class="col-md-2">
+                    <figure class="figure">
+                        <img src="images/1.7.3_original1_noiselevel20.png" class="figure-img img-fluid rounded">
+                        <figcaption class="figure-caption">Noise Level 20</figcaption>
+                    </figure>
+                </div>
+            </div>
+
+            <h3>Woman to Man</h3>
+            <p>Prompt: "a photo of a man"</p>
+            <div class="row mt-4">
+                <div class="col-md-2">
+                    <figure class="figure">
+                        <img src="images/1.7.3_original2.png" class="figure-img img-fluid rounded">
+                        <figcaption class="figure-caption">Original Woman Image</figcaption>
+                    </figure>
+                </div>
+                <div class="col-md-2">
+                    <figure class="figure">
+                        <img src="images/1.7.3_original2_noiselevel1.png" class="figure-img img-fluid rounded">
+                        <figcaption class="figure-caption">Noise Level 1</figcaption>
+                    </figure>
+                </div>
+                <div class="col-md-2">
+                    <figure class="figure">
+                        <img src="images/1.7.3_original2_noiselevel3.png" class="figure-img img-fluid rounded">
+                        <figcaption class="figure-caption">Noise Level 3</figcaption>
+                    </figure>
+                </div>
+                <div class="col-md-2">
+                    <figure class="figure">
+                        <img src="images/1.7.3_original2_noiselevel5.png" class="figure-img img-fluid rounded">
+                        <figcaption class="figure-caption">Noise Level 5</figcaption>
+                    </figure>
+                </div>
+                <div class="col-md-2">
+                    <figure class="figure">
+                        <img src="images/1.7.3_original2_noiselevel7.png" class="figure-img img-fluid rounded">
+                        <figcaption class="figure-caption">Noise Level 7</figcaption>
+                    </figure>
+                </div>
+            </div>
+            <div class="row mt-3">
+                <div class="col-md-2">
+                    <figure class="figure">
+                        <img src="images/1.7.3_original2_noiselevel10.png" class="figure-img img-fluid rounded">
+                        <figcaption class="figure-caption">Noise Level 10</figcaption>
+                    </figure>
+                </div>
+                <div class="col-md-2">
+                    <figure class="figure">
+                        <img src="images/1.7.3_original2_noiselevel20.png" class="figure-img img-fluid rounded">
+                        <figcaption class="figure-caption">Noise Level 20</figcaption>
+                    </figure>
+                </div>
+            </div>
+
+            <h3>Forest to Snowy Mountain Village</h3>
+            <p>Prompt: "an oil painting of a snowy mountain village"</p>
+            <div class="row mt-4">
+                <div class="col-md-2">
+                    <figure class="figure">
+                        <img src="images/1.7.3_original3.png" class="figure-img img-fluid rounded">
+                        <figcaption class="figure-caption">Original Forest Image</figcaption>
+                    </figure>
+                </div>
+                <div class="col-md-2">
+                    <figure class="figure">
+                        <img src="images/1.7.3_original3_noiselevel1.png" class="figure-img img-fluid rounded">
+                        <figcaption class="figure-caption">Noise Level 1</figcaption>
+                    </figure>
+                </div>
+                <div class="col-md-2">
+                    <figure class="figure">
+                        <img src="images/1.7.3_original3_noiselevel3.png" class="figure-img img-fluid rounded">
+                        <figcaption class="figure-caption">Noise Level 3</figcaption>
+                    </figure>
+                </div>
+                <div class="col-md-2">
+                    <figure class="figure">
+                        <img src="images/1.7.3_original3_noiselevel5.png" class="figure-img img-fluid rounded">
+                        <figcaption class="figure-caption">Noise Level 5</figcaption>
+                    </figure>
+                </div>
+                <div class="col-md-2">
+                    <figure class="figure">
+                        <img src="images/1.7.3_original3_noiselevel7.png" class="figure-img img-fluid rounded">
+                        <figcaption class="figure-caption">Noise Level 7</figcaption>
+                    </figure>
+                </div>
+            </div>
+            <div class="row mt-3">
+                <div class="col-md-2">
+                    <figure class="figure">
+                        <img src="images/1.7.3_original3_noiselevel10.png" class="figure-img img-fluid rounded">
+                        <figcaption class="figure-caption">Noise Level 10</figcaption>
+                    </figure>
+                </div>
+                <div class="col-md-2">
+                    <figure class="figure">
+                        <img src="images/1.7.3_original3_noiselevel20.png" class="figure-img img-fluid rounded">
+                        <figcaption class="figure-caption">Noise Level 20</figcaption>
+                    </figure>
+                </div>
+            </div>
+        </div>
+
+        <!-- Part 1.8: Visual Anagrams -->
+        <div class="bg-dark-section">
+            <h2>Part 1.8: Visual Anagrams</h2>
+            <p>Creating optical illusions that change appearance when flipped upside down using paired prompts.</p>
+
+            <h3>Oil Painting Old Man / Campfire</h3>
+            <div class="row">
+                <div class="col-md-6">
+                    <figure class="figure">
+                        <img src="images/1.8_original1.png" class="figure-img img-fluid rounded">
+                        <figcaption class="figure-caption">Normal Orientation ("an oil painting of an old man")
+                        </figcaption>
+                    </figure>
+                </div>
+                <div class="col-md-6">
+                    <figure class="figure">
+                        <img src="images/1.8_original1_flipped.png" class="figure-img img-fluid rounded">
+                        <figcaption class="figure-caption">Flipped ("an oil painting of people around a campfire")
+                        </figcaption>
+                    </figure>
+                </div>
+            </div>
+
+            <h3>Lithograph Waterfall / Skull</h3>
+            <div class="row mt-4">
+                <div class="col-md-6">
+                    <figure class="figure">
+                        <img src="images/1.8_original2.png" class="figure-img img-fluid rounded">
+                        <figcaption class="figure-caption">Normal Orientation ("a lithograph of waterfalls")
+                        </figcaption>
+                    </figure>
+                </div>
+                <div class="col-md-6">
+                    <figure class="figure">
+                        <img src="images/1.8_original2_flipped.png" class="figure-img img-fluid rounded">
+                        <figcaption class="figure-caption">Flipped ("a lithograph of a skull")</figcaption>
+                    </figure>
+                </div>
+            </div>
+
+            <h3>Mountain Village / Amalfi Coast</h3>
+            <div class="row mt-4">
+                <div class="col-md-6">
+                    <figure class="figure">
+                        <img src="images/1.8_original3.png" class="figure-img img-fluid rounded">
+                        <figcaption class="figure-caption">Normal Orientation ("an oil painting of a snowy mountain
+                            village")</figcaption>
+                    </figure>
+                </div>
+                <div class="col-md-6">
+                    <figure class="figure">
+                        <img src="images/1.8_original3_flipped.png" class="figure-img img-fluid rounded">
+                        <figcaption class="figure-caption">Flipped ("a photo of the amalfi cost")</figcaption>
+                    </figure>
+                </div>
+            </div>
+        </div>
+
+        <!-- Part 1.10: Hybrid Images -->
+        <div class="bg-dark-section">
+            <h2>Part 1.10: Hybrid Images</h2>
+            <p>Creating images that appear different at varying distances using frequency separation.</p>
+
+            <h3>Skull and Waterfall</h3>
+            <div class="row">
+                <div class="col-md-4">
+                    <figure class="figure">
+                        <img src="images/1.10_original1.png" class="figure-img img-fluid rounded">
+                        <figcaption class="figure-caption">Low Frequency: "a lithograph of a skull" (visible from far)
+                            <br> High Frequency: "a lithograph of waterfalls" (visible up close)</figcaption>
+                    </figure>
+                </div>
+            </div>
+
+            <h3>Mountain Village and Amalfi Coast</h3>
+            <div class="row mt-4">
+                <div class="col-md-4">
+                    <figure class="figure">
+                        <img src="images/1.10_original2.png" class="figure-img img-fluid rounded">
+                        <figcaption class="figure-caption">Low Frequency: "an oil painting of a snowy mountain village"
+                            <br> High Frequency: "a photo of the amalfi cost"</figcaption>
+                    </figure>
+                </div>
+            </div>
+
+            <h3>Dog and Hipster Barista</h3>
+            <div class="row mt-4">
+                <div class="col-md-4">
+                    <figure class="figure">
+                        <img src="images/1.10_original3.png" class="figure-img img-fluid rounded">
+                        <figcaption class="figure-caption">Low Frequency: "a photo of a dog" <br> High Frequency: "a
+                            photo of a hipster barista"</figcaption>
+                    </figure>
+                </div>
+            </div>
+        </div>
+
+        <!-- Conclusion -->
+        <div class="bg-dark-section">
+            <h2>Conclusion</h2>
+            <p>
+                Through this project, we've explored various applications of diffusion models including:
+            </p>
+            <ul>
+                <li>Basic image generation with different inference steps</li>
+                <li>Iterative denoising processes</li>
+                <li>Classifier-free guidance for improved quality</li>
+                <li>Image-to-image translation with different noise levels</li>
+                <li>Inpainting using the RePaint algorithm</li>
+                <li>Creation of visual anagrams and hybrid images</li>
+            </ul>
+            <p>
+                The results demonstrate the versatility and power of diffusion models in various creative applications
+                and image manipulation tasks.
+            </p>
+        </div>
+
+    </div>
+
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+
+</html>
