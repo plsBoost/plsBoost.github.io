@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>CS180: Project 5A - Fun with Diffusion Models!</title>
+    <title>CS180: Project 5 - Fun with Diffusion Models!</title>
 
     <!-- Bootstrap CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css" rel="stylesheet">
@@ -107,18 +107,16 @@
                 manipulation techniques and creative applications.
             </p>
         </div>
-
         <!-- Part 0: Setup and Initial Generation -->
         <div class="bg-dark-section">
             <h2>Part 0: Setup and Initial Generation</h2>
-            <p>Exploring different prompts and inference steps with DeepFloyd IF model.</p>
-            <h3>Deliverables</h3>
-            <ul>
-                <li>Three text prompts with outputs</li>
-                <li>Comparison of inference steps</li>
-                <li>Random seed: 180</li>
-            </ul>
+            <p>
+                Using DeepFloyd IF model with different prompts and inference steps.
+            <p></p>Random seed used: 180. Comparing
+            generation quality between 20 and 30 inference steps.
+            </p>
 
+            <h3>Man Wearing Hat - Inference Step Comparison</h3>
             <div class="row">
                 <div class="col-md-4">
                     <figure class="figure">
@@ -130,22 +128,45 @@
                 <div class="col-md-4">
                     <figure class="figure">
                         <img src="images/pt0_amanwearingahat_inf30.png" class="figure-img img-fluid rounded">
-                        <figcaption class="figure-caption">Same prompt with 30 inference steps - Note improved details
-                        </figcaption>
+                        <figcaption class="figure-caption">Same prompt with 30 inference steps - Notice improved detail
+                            quality</figcaption>
                     </figure>
                 </div>
+            </div>
+
+            <h3>Snowy Mountain Village - Inference Step Comparison</h3>
+            <div class="row mt-4">
                 <div class="col-md-4">
                     <figure class="figure">
                         <img src="images/pt0_anoilpaintingofasnowymountainvillage.png"
                             class="figure-img img-fluid rounded">
-                        <figcaption class="figure-caption">Prompt: "an oil painting of a snowy mountain village"
-                        </figcaption>
+                        <figcaption class="figure-caption">Prompt: "an oil painting of a snowy mountain village" (20
+                            inference steps)</figcaption>
                     </figure>
                 </div>
                 <div class="col-md-4">
                     <figure class="figure">
+                        <img src="images/pt0_anoilpaintingofasnowymountainvillage_inf30.png"
+                            class="figure-img img-fluid rounded">
+                        <figcaption class="figure-caption">Same prompt with 30 inference steps - Notice improved detail
+                            quality</figcaption>
+                    </figure>
+                </div>
+            </div>
+
+            <h3>Rocket Ship - Inference Step Comparison</h3>
+            <div class="row mt-4">
+                <div class="col-md-4">
+                    <figure class="figure">
                         <img src="images/pt0_arocketship.png" class="figure-img img-fluid rounded">
-                        <figcaption class="figure-caption">Prompt: "a rocket ship"</figcaption>
+                        <figcaption class="figure-caption">Prompt: "a rocket ship" (20 inference steps)</figcaption>
+                    </figure>
+                </div>
+                <div class="col-md-4">
+                    <figure class="figure">
+                        <img src="images/pt0_arocketship_inf30.png" class="figure-img img-fluid rounded">
+                        <figcaption class="figure-caption">Same prompt with 30 inference steps - Notice improved detail
+                            quality</figcaption>
                     </figure>
                 </div>
             </div>
@@ -472,12 +493,6 @@
             <div class="row">
                 <div class="col-md-2">
                     <figure class="figure">
-                        <img src="images/1.7_original1.png" class="figure-img img-fluid rounded">
-                        <figcaption class="figure-caption">Original Campanile</figcaption>
-                    </figure>
-                </div>
-                <div class="col-md-2">
-                    <figure class="figure">
                         <img src="images/1.7_original1_noiselevel1.png" class="figure-img img-fluid rounded">
                         <figcaption class="figure-caption">Noise Level 1</figcaption>
                     </figure>
@@ -514,16 +529,16 @@
                         <figcaption class="figure-caption">Noise Level 20</figcaption>
                     </figure>
                 </div>
+                <div class="col-md-2">
+                    <figure class="figure">
+                        <img src="images/1.7_original1.png" class="figure-img img-fluid rounded">
+                        <figcaption class="figure-caption">Original Campanile</figcaption>
+                    </figure>
+                </div>
             </div>
 
             <h3>Web Image (Dog)</h3>
             <div class="row mt-4">
-                <div class="col-md-2">
-                    <figure class="figure">
-                        <img src="images/1.7_original2.png" class="figure-img img-fluid rounded">
-                        <figcaption class="figure-caption">Original Image (Web - Dog)</figcaption>
-                    </figure>
-                </div>
                 <div class="col-md-2">
                     <figure class="figure">
                         <img src="images/1.7_original2_noiselevel1.png" class="figure-img img-fluid rounded">
@@ -562,16 +577,16 @@
                         <figcaption class="figure-caption">Noise Level 20</figcaption>
                     </figure>
                 </div>
+                <div class="col-md-2">
+                    <figure class="figure">
+                        <img src="images/1.7_original2.png" class="figure-img img-fluid rounded">
+                        <figcaption class="figure-caption">Original Image (Web - Dog)</figcaption>
+                    </figure>
+                </div>
             </div>
 
             <h3>Web Image (Man)</h3>
             <div class="row mt-4">
-                <div class="col-md-2">
-                    <figure class="figure">
-                        <img src="images/1.7_original3.png" class="figure-img img-fluid rounded">
-                        <figcaption class="figure-caption">Original Image (Web - Man)</figcaption>
-                    </figure>
-                </div>
                 <div class="col-md-2">
                     <figure class="figure">
                         <img src="images/1.7_original3_noiselevel1.png" class="figure-img img-fluid rounded">
@@ -610,6 +625,12 @@
                         <figcaption class="figure-caption">Noise Level 20</figcaption>
                     </figure>
                 </div>
+                <div class="col-md-2">
+                    <figure class="figure">
+                        <img src="images/1.7_original3.png" class="figure-img img-fluid rounded">
+                        <figcaption class="figure-caption">Original Image (Web - Man)</figcaption>
+                    </figure>
+                </div>
             </div>
         </div>
 
@@ -620,12 +641,6 @@
 
             <h3>Web Image (Optimus Prime)</h3>
             <div class="row">
-                <div class="col-md-2">
-                    <figure class="figure">
-                        <img src="images/1.7.1_original1.png" class="figure-img img-fluid rounded">
-                        <figcaption class="figure-caption">Original Web Image (Optimus Prime)</figcaption>
-                    </figure>
-                </div>
                 <div class="col-md-2">
                     <figure class="figure">
                         <img src="images/1.7.1_original1_noiselevel1.png" class="figure-img img-fluid rounded">
@@ -664,16 +679,16 @@
                         <figcaption class="figure-caption">Noise Level 20</figcaption>
                     </figure>
                 </div>
+                <div class="col-md-2">
+                    <figure class="figure">
+                        <img src="images/1.7.1_original1.png" class="figure-img img-fluid rounded">
+                        <figcaption class="figure-caption">Original Web Image (Optimus Prime)</figcaption>
+                    </figure>
+                </div>
             </div>
 
             <h3>Hand-Drawn Image 1 (Smiley Face)</h3>
             <div class="row mt-4">
-                <div class="col-md-2">
-                    <figure class="figure">
-                        <img src="images/1.7.1_original2_handdrawn.png" class="figure-img img-fluid rounded">
-                        <figcaption class="figure-caption">Original Hand Drawing (Smiley)</figcaption>
-                    </figure>
-                </div>
                 <div class="col-md-2">
                     <figure class="figure">
                         <img src="images/1.7.1_original2_handdrawn_noiselevel1.png"
@@ -718,16 +733,16 @@
                         <figcaption class="figure-caption">Noise Level 20</figcaption>
                     </figure>
                 </div>
+                <div class="col-md-2">
+                    <figure class="figure">
+                        <img src="images/1.7.1_original2_handdrawn.png" class="figure-img img-fluid rounded">
+                        <figcaption class="figure-caption">Original Hand Drawing (Smiley)</figcaption>
+                    </figure>
+                </div>
             </div>
 
             <h3>Hand-Drawn Image 2 (Optimus Prime)</h3>
             <div class="row mt-4">
-                <div class="col-md-2">
-                    <figure class="figure">
-                        <img src="images/1.7.1_original3_handdrawn.png" class="figure-img img-fluid rounded">
-                        <figcaption class="figure-caption">Original Hand Drawing (Optimus)</figcaption>
-                    </figure>
-                </div>
                 <div class="col-md-2">
                     <figure class="figure">
                         <img src="images/1.7.1_original3_handdrawn_noiselevel1.png"
@@ -770,6 +785,12 @@
                         <img src="images/1.7.1_original3_handdrawn_noiselevel20.png"
                             class="figure-img img-fluid rounded">
                         <figcaption class="figure-caption">Noise Level 20</figcaption>
+                    </figure>
+                </div>
+                <div class="col-md-2">
+                    <figure class="figure">
+                        <img src="images/1.7.1_original3_handdrawn.png" class="figure-img img-fluid rounded">
+                        <figcaption class="figure-caption">Original Hand Drawing (Optimus)</figcaption>
                     </figure>
                 </div>
             </div>
@@ -857,12 +878,6 @@
             <div class="row">
                 <div class="col-md-2">
                     <figure class="figure">
-                        <img src="images/1.7.3_original1.png" class="figure-img img-fluid rounded">
-                        <figcaption class="figure-caption">Original Campanile</figcaption>
-                    </figure>
-                </div>
-                <div class="col-md-2">
-                    <figure class="figure">
                         <img src="images/1.7.3_original1_noiselevel1.png" class="figure-img img-fluid rounded">
                         <figcaption class="figure-caption">Noise Level 1</figcaption>
                     </figure>
@@ -899,17 +914,17 @@
                         <figcaption class="figure-caption">Noise Level 20</figcaption>
                     </figure>
                 </div>
+                <div class="col-md-2">
+                    <figure class="figure">
+                        <img src="images/1.7.3_original1.png" class="figure-img img-fluid rounded">
+                        <figcaption class="figure-caption">Original Campanile</figcaption>
+                    </figure>
+                </div>
             </div>
 
             <h3>Woman to Man</h3>
             <p>Prompt: "a photo of a man"</p>
             <div class="row mt-4">
-                <div class="col-md-2">
-                    <figure class="figure">
-                        <img src="images/1.7.3_original2.png" class="figure-img img-fluid rounded">
-                        <figcaption class="figure-caption">Original Woman Image</figcaption>
-                    </figure>
-                </div>
                 <div class="col-md-2">
                     <figure class="figure">
                         <img src="images/1.7.3_original2_noiselevel1.png" class="figure-img img-fluid rounded">
@@ -948,17 +963,17 @@
                         <figcaption class="figure-caption">Noise Level 20</figcaption>
                     </figure>
                 </div>
+                <div class="col-md-2">
+                    <figure class="figure">
+                        <img src="images/1.7.3_original2.png" class="figure-img img-fluid rounded">
+                        <figcaption class="figure-caption">Original Woman Image</figcaption>
+                    </figure>
+                </div>
             </div>
 
             <h3>Forest to Snowy Mountain Village</h3>
             <p>Prompt: "an oil painting of a snowy mountain village"</p>
             <div class="row mt-4">
-                <div class="col-md-2">
-                    <figure class="figure">
-                        <img src="images/1.7.3_original3.png" class="figure-img img-fluid rounded">
-                        <figcaption class="figure-caption">Original Forest Image</figcaption>
-                    </figure>
-                </div>
                 <div class="col-md-2">
                     <figure class="figure">
                         <img src="images/1.7.3_original3_noiselevel1.png" class="figure-img img-fluid rounded">
@@ -995,6 +1010,12 @@
                     <figure class="figure">
                         <img src="images/1.7.3_original3_noiselevel20.png" class="figure-img img-fluid rounded">
                         <figcaption class="figure-caption">Noise Level 20</figcaption>
+                    </figure>
+                </div>
+                <div class="col-md-2">
+                    <figure class="figure">
+                        <img src="images/1.7.3_original3.png" class="figure-img img-fluid rounded">
+                        <figcaption class="figure-caption">Original Forest Image</figcaption>
                     </figure>
                 </div>
             </div>
@@ -1069,7 +1090,8 @@
                     <figure class="figure">
                         <img src="images/1.10_original1.png" class="figure-img img-fluid rounded">
                         <figcaption class="figure-caption">Low Frequency: "a lithograph of a skull" (visible from far)
-                            <br> High Frequency: "a lithograph of waterfalls" (visible up close)</figcaption>
+                            <br> High Frequency: "a lithograph of waterfalls" (visible up close)
+                        </figcaption>
                     </figure>
                 </div>
             </div>
@@ -1080,7 +1102,8 @@
                     <figure class="figure">
                         <img src="images/1.10_original2.png" class="figure-img img-fluid rounded">
                         <figcaption class="figure-caption">Low Frequency: "an oil painting of a snowy mountain village"
-                            <br> High Frequency: "a photo of the amalfi cost"</figcaption>
+                            <br> High Frequency: "a photo of the amalfi cost"
+                        </figcaption>
                     </figure>
                 </div>
             </div>
@@ -1117,6 +1140,192 @@
             </p>
         </div>
 
+    </div>
+
+    <!-- Part B Section -->
+    <div class="bg-dark-section">
+        <h1>Part B: Training Your Own Diffusion Model</h1>
+        <p>
+            Following our exploration of DeepFloyd IF, we now implement our own diffusion models through three
+            progressive stages:
+            unconditioned, time-conditioned, and class-conditioned UNet architectures.
+        </p>
+    </div>
+
+    <!-- Part 1: Single-Step Denoising -->
+    <div class="bg-dark-section">
+        <h2>Part 1: Single-Step Denoising U-Net</h2>
+        <p>
+            We begin with a simple UNet architecture that performs one-step denoising.
+        </p>
+
+        <div class="row mt-4">
+            <div class="col-md-4">
+                <figure class="figure">
+                    <img src="5b/1.2_noiselevels_visualization.png" class="figure-img img-fluid rounded"
+                        style="height: 300px; width: auto;">
+                    <figcaption class="figure-caption">Visualization of different noise levels on MNIST digits
+                    </figcaption>
+                </figure>
+            </div>
+            <div class="col-md-8">
+                <figure class="figure">
+                    <img src="5b/1.2_losscurve.png" class="figure-img img-fluid rounded"
+                        style="height: 300px; width: auto;">
+                    <figcaption class="figure-caption">Training loss curve for unconditioned UNet</figcaption>
+                </figure>
+            </div>
+        </div>
+
+        <h3>Training Results</h3>
+        <div class="row mt-4">
+            <div class="col-md-6">
+                <figure class="figure">
+                    <img src="5b/1.2_1st_epoch.png" class="figure-img img-fluid rounded"
+                        style="height: 300px; width: auto;">
+                    <figcaption class="figure-caption">Results after first epoch</figcaption>
+                </figure>
+            </div>
+            <div class="col-md-6">
+                <figure class="figure">
+                    <img src="5b/1.2_5th_epoch.png" class="figure-img img-fluid rounded"
+                        style="height: 300px; width: auto;">
+                    <figcaption class="figure-caption">Results after fifth epoch</figcaption>
+                </figure>
+            </div>
+        </div>
+
+        <h3>Out-of-Distribution Testing</h3>
+        <div class="row mt-4">
+            <div class="col-md-12">
+                <figure class="figure">
+                    <img src="5b/1.2.2_out_of_distribution.png" class="figure-img img-fluid rounded"
+                        style="width: 100%; height: auto;">
+                    <figcaption class="figure-caption">Performance on different noise levels (σ = 0.0 to 1.0)
+                    </figcaption>
+                </figure>
+            </div>
+        </div>
+    </div>
+
+    <!-- Part 2: Time-Conditioned UNet -->
+    <div class="bg-dark-section">
+        <h2>Part 2: Time-Conditioned UNet</h2>
+        <p>
+            We enhance our model by adding time conditioning, allowing the network to handle different noise levels more
+            effectively.
+            This is achieved by injecting timestep information through FCBlocks at key points in the UNet architecture.
+        </p>
+
+        <div class="row">
+            <div class="col-md-6">
+                <figure class="figure">
+                    <img src="5b/training_timeconditioned_unet_algorithm.png" class="figure-img img-fluid rounded"
+                        style="height: 300px; width: auto;">
+                    <figcaption class="figure-caption">Training algorithm for time-conditioned UNet</figcaption>
+                </figure>
+            </div>
+            <div class="col-md-6">
+                <figure class="figure">
+                    <img src="5b/sampling_timeconditioned_unet_algorithm.png" class="figure-img img-fluid rounded"
+                        style="height: 300px; width: auto;">
+                    <figcaption class="figure-caption">Sampling algorithm for time-conditioned UNet</figcaption>
+                </figure>
+            </div>
+        </div>
+
+        <div class="row mt-4">
+            <div class="col-md-12">
+                <figure class="figure">
+                    <img src="5b/2.3_losscurve.png" class="figure-img img-fluid rounded"
+                        style="width: 100%; height: auto;">
+                    <figcaption class="figure-caption">Training loss curve for time-conditioned UNet</figcaption>
+                </figure>
+            </div>
+        </div>
+
+        <h3>Sampling Results</h3>
+        <div class="row mt-4">
+            <div class="col-md-6">
+                <figure class="figure">
+                    <img src="5b/2.3_epoch5.png" class="figure-img img-fluid rounded"
+                        style="height: 300px; width: auto;">
+                    <figcaption class="figure-caption">Generated samples after 5 epochs</figcaption>
+                </figure>
+            </div>
+            <div class="col-md-6">
+                <figure class="figure">
+                    <img src="5b/2.3_epoch20.png" class="figure-img img-fluid rounded"
+                        style="height: 300px; width: auto;">
+                    <figcaption class="figure-caption">Generated samples after 20 epochs</figcaption>
+                </figure>
+            </div>
+        </div>
+    </div>
+
+    <div class="bg-dark-section">
+        <h2>Part 2.5: Class-Conditioned UNet with Classifier-Free Guidance</h2>
+        <p>
+            The final UNet adds class conditioning with classifier-free guidance (γ=5.0). This allows us to
+            generate
+            specific digits with improved quality. For each digit (0-9), we generate four different instances to
+            demonstrate
+            the model's ability to produce clear digits similar to MNIST dataset.
+        </p>
+
+        <div class="row mt-4">
+            <div class="col-md-12">
+                <figure class="figure">
+                    <img src="5b/2.5_losscurve.png" class="figure-img img-fluid rounded"
+                        style="width: 100%; height: auto;">
+                    <figcaption class="figure-caption">Training loss curve for class-conditioned UNet</figcaption>
+                </figure>
+            </div>
+        </div>
+
+        <h3>Class-Conditioned Sampling Results</h3>
+        <p>Each row shows four different generations of the same digit (0-9), demonstrating both consistency in digit
+            identity and variation in style.</p>
+
+        <div class="row mt-4">
+            <div class="col-md-6">
+                <figure class="figure">
+                    <img src="5b/2.5_epoch5.png" class="figure-img img-fluid rounded"
+                        style="height: 400px; width: auto;">
+                    <figcaption class="figure-caption">
+                        Epoch 5: Four samples of each digit (0-9).<br>
+                        Each row represents a digit, each column is a different sample.
+                    </figcaption>
+                </figure>
+            </div>
+            <div class="col-md-6">
+                <figure class="figure">
+                    <img src="5b/2.5_epoch20.png" class="figure-img img-fluid rounded"
+                        style="height: 400px; width: auto;">
+                    <figcaption class="figure-caption">
+                        Epoch 20: Four samples of each digit (0-9).<br>
+                        Note the improved clarity and consistency compared to epoch 5.
+                    </figcaption>
+                </figure>
+            </div>
+        </div>
+    </div>
+
+    <!-- Updated Conclusion -->
+    <div class="bg-dark-section">
+        <h2>Conclusion</h2>
+        <p>
+            Through this project, we've explored the evolution of diffusion models from basic denoising to 
+            conditional generation:
+        </p>
+        <ul>
+            <li>Single-step denoising provided a foundation but showed limitations in handling varying noise levels</li>
+            <li>Time conditioning improved the model's ability to handle different noise levels but still produced
+                somewhat inconsistent results</li>
+            <li>Class conditioning with classifier-free guidance significantly enhanced control and quality, producing
+                clear,
+                identifiable digits</li>
+        </ul>
     </div>
 
     <!-- Bootstrap JS -->
