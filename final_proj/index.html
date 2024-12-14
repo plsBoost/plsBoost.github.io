@@ -176,6 +176,124 @@
         </div>
         <!-- Bootstrap JS -->
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js"></script>
+    </div>
+
+
+    <!-- Header Section -->
+    <div class="header">
+        <div>
+            <h2>Gradient Domain Fusion Project</h2>
+            <p class="lead">Implementing Poisson Blending and Mixed Gradients</p>
+        </div>
+    </div>
+    <!-- Gradient Domain Processing Section -->
+    <div class="bg-dark-section">
+        <h2>Gradient Domain Processing</h2>
+        <p>
+            Gradient-domain processing enables seamless blending of objects between images by preserving gradient
+            information
+            while allowing intensity adjustments. This technique creates natural-looking composites by solving a
+            series of
+            optimization problems that maintain local image structure while eliminating visible seams.
+        </p>
+    </div>
+
+    <!-- Toy Problem Section -->
+    <div class="bg-dark-section">
+        <h3>Part 1: Toy Problem</h3>
+        <p>
+            I implement a gradient reconstruction system that recovers an image from its x and y gradients plus
+            a single intensity value.
+            The system solves a least squares problem by constructing sparse matrices that represent gradient
+            constraints. For each pixel,
+            I minimize (v(x+1,y)-v(x,y) - (s(x+1,y)-s(x,y)))² for x-gradients and (v(x,y+1)-v(x,y) -
+            (s(x,y+1)-s(x,y)))² for y-gradients,
+            plus an anchor constraint v(1,1)=s(1,1) to fix the absolute intensities.
+        </p>
+        <div class="row mt-4">
+            <div class="col-md-6">
+                <figure class="figure">
+                    <img src="images/toy_original.jpg" class="figure-img img-fluid rounded">
+                    <figcaption class="figure-caption">Original image used for gradient extraction</figcaption>
+                </figure>
+            </div>
+            <div class="col-md-6">
+                <figure class="figure">
+                    <img src="images/toy_reconstructed.jpg" class="figure-img img-fluid rounded">
+                    <figcaption class="figure-caption">Image reconstructed from gradients, achieving
+                        an image reconstruction with minimal error (0.01 L2 norm)</figcaption>
+                </figure>
+            </div>
+        </div>
+    </div>
+
+    <!-- Poisson Blending Section -->
+    <div class="bg-dark-section">
+        <h3>Part 2: Poisson Blending</h3>
+        <p>
+            I implement Poisson blending by solving for pixel values that preserve gradients from the source
+            image while matching the
+            boundary conditions of the target image. The system uses sparse matrices to efficiently solve the
+            optimization problem.
+            For each pixel i in the source region and its neighbors j, I minimize (v_i - v_j - (s_i - s_j))²
+            when j is also in the
+            source region, and (v_i - t_j - (s_i - s_j))² when j is in the target region.
+        </p>
+        <div class="row mt-4">
+            <div class="col-md-4">
+                <figure class="figure">
+                    <img src="images/preview_raw.jpg" class="figure-img img-fluid rounded">
+                    <figcaption class="figure-caption">Naive copy-paste showing distinct boundary artifacts
+                    </figcaption>
+                </figure>
+            </div>
+            <div class="col-md-4">
+                <figure class="figure">
+                    <img src="images/poisson_blend_raw.jpg" class="figure-img img-fluid rounded">
+                    <figcaption class="figure-caption">Poisson blending result showing seamless integration with
+                        the target image</figcaption>
+                </figure>
+            </div>
+            <div class="col-md-4">
+                <figure class="figure">
+                    <img src="images/chick_poisson_blend_raw.jpg" class="figure-img img-fluid rounded">
+                    <figcaption class="figure-caption">Another Poisson blending example with different source
+                        and target images</figcaption>
+                </figure>
+            </div>
+        </div>
+    </div>
+
+    <!-- Mixed Gradients Section -->
+    <div class="bg-dark-section">
+        <h3>Bells & Whistles: Mixed Gradients</h3>
+        <p>
+            I improved the basic Poisson blending by implementing mixed gradients, where instead of always using
+            source gradients,
+            I select the gradient with larger magnitude between source and target. This preserves strong edges
+            from both images,
+            leading to better preservation of high-frequency details. For each pixel pair (i,j), I compare |s_i
+            - s_j| with
+            |t_i - t_j| and use the larger gradient in the optimization.
+        </p>
+        <div class="row mt-4">
+            <div class="col-md-6">
+                <figure class="figure">
+                    <img src="images/mixed_gradient_raw.jpg" class="figure-img img-fluid rounded">
+                    <figcaption class="figure-caption">Mixed gradient result showing enhanced edge preservation
+                    </figcaption>
+                </figure>
+            </div>
+            <div class="col-md-6">
+                <figure class="figure">
+                    <img src="images/chick_mixed_gradient_raw.jpg" class="figure-img img-fluid rounded">
+                    <figcaption class="figure-caption">Second mixed gradient example demonstrating consistent
+                        edge handling</figcaption>
+                </figure>
+            </div>
+        </div>
+    </div>
+    </div>
 </body>
 
 </html>
