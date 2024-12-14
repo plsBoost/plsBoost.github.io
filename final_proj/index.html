@@ -105,25 +105,22 @@
                 <ul>
                     <li>Center point fixed at (8,8) in the image grid</li>
                     <li>Shift calculation based on distance from center and depth factor</li>
-                    <li>Depth factors range from 0 to 3 with 7 evenly spaced steps</li>
+                    <li>C values range from 0 to 3 with 7 evenly spaced steps (0, 0.5, 1.0, 1.5, 2.0, 2.5, 3.0)</li>
                 </ul>
             </div>
 
-            <div class="row mt-4">
-                <div class="col-md-6">
-                    <figure class="figure">
-                        <img src="images/depth_frames.png" class="figure-img img-fluid rounded">
-                        <figcaption class="figure-caption">Depth refocusing results at different depth factors
-                        </figcaption>
-                    </figure>
-                </div>
-                <div class="col-md-6">
-                    <figure class="figure">
-                        <img src="images/focus_sequence.gif" class="figure-img img-fluid rounded">
-                        <figcaption class="figure-caption">Animated sequence showing focus transition across depths
-                        </figcaption>
-                    </figure>
-                </div>
+            <div class="container">
+                <figure class="figure mb-4">
+                    <img src="images/depth_frames.png" class="figure-img img-fluid rounded" alt="Depth frames">
+                    <figcaption class="figure-caption">Depth refocusing results at different C values</figcaption>
+                </figure>
+
+                <figure class="figure mb-4">
+                    <img src="images/focus_sequence.gif" class="figure-img img-fluid rounded" alt="Focus sequence"
+                        loop="infinite">
+                    <figcaption class="figure-caption">Animated sequence showing focus transition across depths
+                    </figcaption>
+                </figure>
             </div>
         </div>
 
@@ -131,7 +128,8 @@
         <div class="bg-dark-section">
             <h2>Part 2: Aperture Adjustment</h2>
             <p>
-                The aperture adjustment simulates different lens apertures by controlling how many viewpoints contribute
+                The aperture adjustment simulates different lens apertures by controlling how many viewpoints
+                contribute
                 to the final image. Larger apertures use more viewpoints, creating stronger depth-of-field effects.
             </p>
 
@@ -145,40 +143,35 @@
                 </ul>
             </div>
 
-            <div class="row mt-4">
-                <div class="col-md-6">
-                    <figure class="figure">
-                        <img src="images/aperature_frames.png" class="figure-img img-fluid rounded"
-                            style="max-width: 100%; height: auto; object-fit: cover;">
-                        <figcaption class="figure-caption">Aperture adjustment results with different aperture sizes
-                        </figcaption>
-                    </figure>
-                </div>
-                <div class="col-md-6">
-                    <figure class="figure">
-                        <img src="images/aperture_sequence.gif" class="figure-img img-fluid rounded"
-                            style="max-width: 100%; height: auto;" loop="infinite">
-                        <figcaption class="figure-caption">Animated sequence showing aperture size transition
-                        </figcaption>
-                    </figure>
-                </div>
-            </div>
+            <div class="container">
+                <figure class="figure mb-4">
+                    <img src="images/aperature_frames.png" class="figure-img img-fluid rounded"
+                        style="max-width: 100%; height: auto; object-fit: cover;" alt="Aperture frames">
+                    <figcaption class="figure-caption">Aperture adjustment results with different aperture sizes
+                    </figcaption>
+                </figure>
 
+                <figure class="figure mb-4">
+                    <img src="images/aperture_sequence.gif" class="figure-img img-fluid rounded"
+                        style="max-width: 100%; height: auto;" loop="infinite" alt="Aperture sequence">
+                    <figcaption class="figure-caption">Animated sequence showing aperture size transition
+                    </figcaption>
+                </figure>
+            </div>
         </div>
 
         <!-- Conclusion -->
         <div class="bg-dark-section">
             <h2>Conclusion</h2>
             This project showed me the potential of light field photography. By capturing more information when
-            taking
-            a picture, we can do things like change focus or adjust the depth of field afterwards. It's amazing how
+            taking a picture, we can do things like change focus or adjust the depth of field afterwards. I was also surprised that the parallax effect makes it so that objects can appear to move a lot when closer and not a lot when further away. The last thing is that it was amazing how combining the parallax effect with
             simple shifting and averaging operations can create interesting effects.
         </div>
         <!-- Bootstrap JS -->
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js"></script>
+
+        <div style="border-top: 1px solid #dee2e6; margin: 20px 0;"></div>
     </div>
-
-
     <!-- Header Section -->
     <div class="header">
         <div>
